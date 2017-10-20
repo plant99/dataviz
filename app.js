@@ -4,15 +4,18 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
-var routes = require('./routes/index');
-
+var index = require('./routes/index');
+var users = require('./routes/users');
+var dbInit = require('./middlewares/dbInit').dbInit
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+dbInit()
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -20,8 +23,21 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+//session
+app.use(session({
+  "secret": 'secretString',
+  "cookie": {
+    "maxAge": 186000000,
+  },
+  "path": "/",
+}))
 
+app.use('/users', users);
+
+app.get('/dashboard', (req, res)=>{
+    console.log(req.session);
+    res.redirect('/dashboard.html')
+})
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

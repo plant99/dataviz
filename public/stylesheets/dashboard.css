@@ -1,0 +1,44 @@
+#navbarContainer{
+	background-color: #76b852;
+	font-family: 'Rambla';
+	height: 700px;
+	float: left;
+}
+#navbarContainer ul{
+	text-align: center;
+	list-style-type: none;
+}
+#navbarContainer ul li{
+	margin-left: -50px;
+	color:white;
+	padding: 20px;
+}
+#navbarContainer ul li:first-child {
+	margin-top:50px;
+}
+.toggleNav{
+	margin-top:50%;
+	display: block;
+	font-size: 30px;
+	float: right;
+}
+.toggleNav:hover{
+	cursor: pointer;
+}
+.mainBox{
+	position: relative;
+	font-family: 'Alegreya Sans SC';
+}
+
+.floatLeft{
+	float: left;
+}
+.break{
+	clear: both;
+}
+h1,h2,h3,h4,h4,h5,h6{
+	padding: 10px;
+}
+.headingMB{
+	padding-left: 50px;
+}
