@@ -16,3 +16,13 @@ $('.toggleNav').click(function(){
 
 	}
 })
+
+//Slider
+$('#ex1').slider({
+	formatter: function(value) {
+		return 'Current value: ' + value;
+	}
+});
+$('#ex1').change(function(){
+	$('.timeDisplay').html($('#ex1').val())
+})
