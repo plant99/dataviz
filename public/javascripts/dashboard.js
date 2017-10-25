@@ -35,15 +35,9 @@ $('#ex1').change(function(){
         let toBeRemoved = loadedLayers.pop();
         mymap.removeLayer(toBeRemoved);
     }
-    if(newValueOfTime == 8){
-        for(var i=1; i<=4; i++){
-            let mapName = maps['map'+newValueOfTime +'_'+i];
-            loadToMap(mapName);
-        }
-    }else{
-         let mapName = maps['map'+newValueOfTime];
-         loadToMap(mapName);
-    }
+    
+    let mapName = maps['map'+newValueOfTime];
+    loadToMap(mapName);
     
 })
 
@@ -54,7 +48,6 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     id: 'isawnyu.map-knmctlkh',
     accessToken: 'pk.eyJ1IjoicGxhbnQ5OSIsImEiOiJjajh5MzhqdTUyNWxrMzJwOGJ0dWE2NTB0In0.dyjmXnIUF9KYU4ewcTdqcQ'
 }).addTo(mymap);
-
 function onEachFeature(feature, layer) {
 		var popupContent = "<p>I started out as a GeoJSON " +
 				feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
@@ -100,23 +93,15 @@ $.getJSON('/jsons/map6.geojson', function(json){
 $.getJSON('/jsons/map7.geojson', function(json){
     maps['map7'] = json;
 })
-$.getJSON('/jsons/map8-1.json', function(json){
-    maps['map8_1'] = json;
+$.getJSON('/jsons/map8.geojson', function(json){
+    maps['map8'] = json;
 })
-$.getJSON('/jsons/map8-2.json', function(json){
-    maps['map8_2'] = json;
-})
-$.getJSON('/jsons/map8-3.json', function(json){
-    maps['map8_3'] = json;
-})
-$.getJSON('/jsons/map8-4.json', function(json){
-    maps['map8_4'] = json;
 
-})
 function loadToMap(mapName){
     var area = mapName;
     let toBeAdded = L.geoJSON(area, {
         fillOpacity:0.6,
+        weight:0.5,
         style: function (feature) {
             return feature.properties && feature.properties.style;
         },
