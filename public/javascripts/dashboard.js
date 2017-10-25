@@ -35,29 +35,16 @@ $('#ex1').change(function(){
         let toBeRemoved = loadedLayers.pop();
         mymap.removeLayer(toBeRemoved);
     }
-    var area = maps['map'+newValueOfTime];
-    let toBeAdded = L.geoJSON(area, {
-        color: 'grey',
-        fillColor: '#f03',
-        style: function (feature) {
-            return feature.properties && feature.properties.style;
-        },
-
-        onEachFeature: onEachFeature,
-
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-                radius: 8,
-                fillColor: "##7442a9",
-                color: "#212f5b",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            });
+    if(newValueOfTime == 8){
+        for(var i=1; i<=4; i++){
+            let mapName = maps['map'+newValueOfTime +'_'+i];
+            loadToMap(mapName);
         }
-    });
-    toBeAdded.addTo(mymap);
-    loadedLayers.push(toBeAdded);
+    }else{
+         let mapName = maps['map'+newValueOfTime];
+         loadToMap(mapName);
+    }
+    
 })
 
 var mymap = L.map('map').setView([51.505, -0.09], 3);
@@ -67,62 +54,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     id: 'isawnyu.map-knmctlkh',
     accessToken: 'pk.eyJ1IjoicGxhbnQ5OSIsImEiOiJjajh5MzhqdTUyNWxrMzJwOGJ0dWE2NTB0In0.dyjmXnIUF9KYU4ewcTdqcQ'
 }).addTo(mymap);
-/*
-var marker = L.marker([51.5, -0.09]).addTo(mymap);
 
-var circle = L.circle([51.508, -0.11], {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5,
-    radius: 500
-}).addTo(mymap);
-
-var polygon = L.polygon([
-    [51.509, -0.08],
-    [51.503, -0.06],
-    [51.51, -0.047]
-]).addTo(mymap);
-
-marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-circle.bindPopup("I am a circle.");
-polygon.bindPopup("I am a polygon.");
-
-var popup = L.popup()
-    .setLatLng([51.5, -0.09])
-    .setContent("I am a standalone popup.")
-    .openOn(mymap);
-
-$.getJSON("/jsons/map1.geojson", function(json) {
-    console.log(json); // this will show the info it in firebug console
-    var campus = json;
-    x = L.geoJSON(campus, {
-        color: 'grey',
-        fillColor: '#f03',
-        style: function (feature) {
-            return feature.properties && feature.properties.style;
-        },
-
-        onEachFeature: onEachFeature,
-
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-                radius: 8,
-                fillColor: "#ff7800",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            });
-        }
-    });
-    x.addTo(mymap);
-    //remove layer
-    setTimeout(()=>{
-        mymap.removeLayer(x);
-    }, 5000)
-});
-
-*/
 function onEachFeature(feature, layer) {
 		var popupContent = "<p>I started out as a GeoJSON " +
 				feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
@@ -135,6 +67,7 @@ function onEachFeature(feature, layer) {
 	}
 
 let loadedJSONCount = 0;
+//modify this to check json 'MAPS'
 function checkAllLoaded(){
     var allLoaded = true;
     var jsons = [map1, map2, map3, map4, map5, map6, map7, map8_1, map8_2, map8_3, map8_4];
@@ -178,4 +111,29 @@ $.getJSON('/jsons/map8-3.json', function(json){
 })
 $.getJSON('/jsons/map8-4.json', function(json){
     maps['map8_4'] = json;
+
 })
+function loadToMap(mapName){
+    var area = mapName;
+    let toBeAdded = L.geoJSON(area, {
+        fillOpacity:0.6,
+        style: function (feature) {
+            return feature.properties && feature.properties.style;
+        },
+
+        onEachFeature: onEachFeature,
+
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: 8,
+                fillColor: "#7442a9",
+                color: "#212f5b",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            });
+        }
+    });
+    toBeAdded.addTo(mymap);
+    loadedLayers.push(toBeAdded);
+}
