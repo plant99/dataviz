@@ -51,4 +51,20 @@ h1,h2,h3,h4,h4,h5,h6{
 	font-size: 20px;
 	border:1px solid purple;
 }
-#map { height: 400px; }
+#map { 
+	height: 400px;
+ }
+.majorBattles{
+	color:white;
+	margin-top: 8px;
+	background-color:  #76b852;
+	padding: 20px;
+	border-radius: 10px;
+	width:100px;
+}
+.majorBattles:hover{
+	cursor:pointer;
+	background-color: #e28644;
+	transition-duration: 0.5s;
+	color:white;
+}

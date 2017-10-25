@@ -28,7 +28,7 @@ $('#ex1').slider({
 
 $('#ex1').change(function(){
     let newValueOfTime = $('#ex1').val();
-	$('.timeDisplay').html(newValueOfTime);
+	$('.timeDisplay').html(parseToYear(newValueOfTime));
     //load proper maps
 
     while(loadedLayers.length){
@@ -101,7 +101,7 @@ function loadToMap(mapName){
     var area = mapName;
     let toBeAdded = L.geoJSON(area, {
         fillOpacity:0.6,
-        weight:0.5,
+        weight:0.3,
         style: function (feature) {
             return feature.properties && feature.properties.style;
         },
@@ -113,7 +113,7 @@ function loadToMap(mapName){
                 radius: 8,
                 fillColor: "#7442a9",
                 color: "#212f5b",
-                weight: 1,
+                weight: 0.5,
                 opacity: 1,
                 fillOpacity: 0.8
             });
@@ -121,4 +121,32 @@ function loadToMap(mapName){
     });
     toBeAdded.addTo(mymap);
     loadedLayers.push(toBeAdded);
+}
+function parseToYear(alpha){
+    switch(alpha){
+        case '1':
+            return 1206;
+            break;
+        case '2':
+            return 1219;
+            break;
+        case '3':
+            return 1223;
+            break;
+        case '4':
+            return 1227;
+            break;
+        case '5':
+            return 1237;
+            break;
+        case '6':
+            return 1259;
+            break;
+        case '7':
+            return 1279;
+            break;
+        case '8':
+            return 1294;
+            break;
+    }
 }
