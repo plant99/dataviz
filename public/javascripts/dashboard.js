@@ -30,8 +30,13 @@ $('#ex1').change(function(){
     let newValueOfTime = $('#ex1').val();
 	$('.timeDisplay').html(newValueOfTime);
     //load proper maps
+
+    while(loadedLayers.length){
+        let toBeRemoved = loadedLayers.pop();
+        mymap.removeLayer(toBeRemoved);
+    }
     var area = maps['map'+newValueOfTime];
-    x = L.geoJSON(area, {
+    let toBeAdded = L.geoJSON(area, {
         color: 'grey',
         fillColor: '#f03',
         style: function (feature) {
@@ -43,16 +48,16 @@ $('#ex1').change(function(){
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
                 radius: 8,
-                fillColor: "#ff7800",
-                color: "#000",
+                fillColor: "##7442a9",
+                color: "#212f5b",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
             });
         }
     });
-    x.addTo(mymap);
-    loadedLayers.push(x);
+    toBeAdded.addTo(mymap);
+    loadedLayers.push(toBeAdded);
 })
 
 var mymap = L.map('map').setView([51.505, -0.09], 3);
@@ -86,7 +91,7 @@ var popup = L.popup()
     .setLatLng([51.5, -0.09])
     .setContent("I am a standalone popup.")
     .openOn(mymap);
-*/
+
 $.getJSON("/jsons/map1.geojson", function(json) {
     console.log(json); // this will show the info it in firebug console
     var campus = json;
@@ -117,7 +122,7 @@ $.getJSON("/jsons/map1.geojson", function(json) {
     }, 5000)
 });
 
-
+*/
 function onEachFeature(feature, layer) {
 		var popupContent = "<p>I started out as a GeoJSON " +
 				feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
@@ -130,7 +135,6 @@ function onEachFeature(feature, layer) {
 	}
 
 let loadedJSONCount = 0;
-let map1, map2, map3, map4, map5, map6, map7, map8_1, map8_2, map8_3, map8_4;
 function checkAllLoaded(){
     var allLoaded = true;
     var jsons = [map1, map2, map3, map4, map5, map6, map7, map8_1, map8_2, map8_3, map8_4];
@@ -164,15 +168,14 @@ $.getJSON('/jsons/map7.geojson', function(json){
     maps['map7'] = json;
 })
 $.getJSON('/jsons/map8-1.json', function(json){
-    map8_1 = json;
+    maps['map8_1'] = json;
 })
 $.getJSON('/jsons/map8-2.json', function(json){
-    map8_2 = json;
+    maps['map8_2'] = json;
 })
 $.getJSON('/jsons/map8-3.json', function(json){
-    map8_3 = json;
+    maps['map8_3'] = json;
 })
 $.getJSON('/jsons/map8-4.json', function(json){
-    map8_4 = json;
-    console.log(checkAllLoaded());
+    maps['map8_4'] = json;
 })
