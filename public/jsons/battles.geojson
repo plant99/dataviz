@@ -1,0 +1,33 @@
+{
+   "battles": [
+      {
+         "name": "Capture of Western Xia",
+         "description": "First major invasion by Mongols",
+         "territorial_changes": "Western Xia lands absorbed into Mongol Empire",
+         "coordinates": {
+            "lat": "38.4557607",
+            "lng": "105.9651504"
+         },
+         "date": "1209-10",
+         "facts": [
+            "The invasion spanned for around 6 years 1203-1209",
+            "This was followed by a 23 year old collaborative campaign against Jin, from Central China."
+         ]
+      },
+      {
+         "name": "Invasion of fragmented Poland",
+         "description": "First attack on Europe continent",
+         "territorial_changes": "Polish lands absorbed into Mongol Empire",
+         "coordinates": {
+            "lat": "51.9194",
+            "lng": "19.1451"
+         },
+         "date": "1241-42",
+         "facts": [
+            "Led by Jengis Khan's sons",
+            "Meanwhile, the great Khan was on his second wave of invading China",
+            "Unfortunately he died in 1242 and both the missions were halted."
+         ]
+      }
+   ]
+}

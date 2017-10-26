@@ -1,5 +1,7 @@
 let loadedLayers = [];
+var battlePopups = [];
 let maps = {};
+let popularplaces = [];
 $('.toggleNav').click(function(){
 	if($('#navbarContainer').css('margin-left') == '0px'){
 		console.log(1);
@@ -19,6 +21,18 @@ $('.toggleNav').click(function(){
 	}
 })
 
+//city icon
+
+var cityIcon = L.icon({
+    iconUrl: '/images/city.svg',
+
+    iconSize:     [32, 32], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
 //Slider
 $('#ex1').slider({
 	formatter: function(value) {
@@ -31,6 +45,7 @@ $('#ex1').change(function(){
 	$('.timeDisplay').html(parseToYear(newValueOfTime));
     //load proper maps
 
+    //make this a function
     while(loadedLayers.length){
         let toBeRemoved = loadedLayers.pop();
         mymap.removeLayer(toBeRemoved);
@@ -49,15 +64,8 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     accessToken: 'pk.eyJ1IjoicGxhbnQ5OSIsImEiOiJjajh5MzhqdTUyNWxrMzJwOGJ0dWE2NTB0In0.dyjmXnIUF9KYU4ewcTdqcQ'
 }).addTo(mymap);
 function onEachFeature(feature, layer) {
-		var popupContent = "<p>I started out as a GeoJSON " +
-				feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
-
-		if (feature.properties && feature.properties.popupContent) {
-			popupContent += feature.properties.popupContent;
-		}
-
-		layer.bindPopup(popupContent);
-	}
+    //temporarily does nothing
+}
 
 let loadedJSONCount = 0;
 //modify this to check json 'MAPS'
@@ -72,6 +80,31 @@ function checkAllLoaded(){
     return allLoaded;
 }
 //load jsons
+mymap.on('zoomend', function(e){
+    if(mymap.getZoom() >= 5){
+        //display important places
+        var popularplacesMap = maps['popularplaces']['places'];
+        if(!popularplaces.length){
+            console.log(true);
+            for(i in popularplacesMap){
+                console.log("Ho raha hai")
+                var markerPointer = L.marker([popularplacesMap[i].location.lat, popularplacesMap[i].location.lng], {icon: cityIcon}).addTo(mymap);
+                markerPointer.bindPopup(popularplacesMap[i].placeName);
+                popularplaces.push(markerPointer);
+            }
+        }
+
+    }else{
+        //delete important places
+        while(popularplaces.length){
+            var popularplace = popularplaces.pop();
+            mymap.removeLayer(popularplace);
+        }
+    }
+})
+mymap.on('click', function(e){
+    console.log(e.latlng)
+})
 $.getJSON('/jsons/map1.geojson', function(json){
     maps['map1'] = json;
 })
@@ -97,6 +130,54 @@ $.getJSON('/jsons/map8.geojson', function(json){
     maps['map8'] = json;
 })
 
+$.getJSON('/jsons/battles.geojson', function(data){
+    maps['battles'] = data;
+})
+$.getJSON('/jsons/popularplaces.geojson', function(data){
+    maps['popularplaces'] = data;
+})
+
+$('.majorBattles').click(()=>{
+    while(loadedLayers.length){
+        let toBeRemoved = loadedLayers.pop();
+        mymap.removeLayer(toBeRemoved);
+    }
+    while(battlePopups.length){
+        let toBeRemoved = battlePopups.pop();
+        mymap.removeLayer(toBeRemoved);
+    }
+    let description, date, facts;
+    
+
+    let battles = maps['battles']['battles'];
+    for (i in battles){
+        let battleMark = L.marker([battles[i].coordinates.lat, battles[i].coordinates.lng ]).addTo(mymap);
+        battleMark.bindPopup(battles[i].name);
+        let description = battles[i].description;
+        let date = battles[i].date;
+        let facts = '';
+        for (j in battles[i].facts){
+            facts += "<li>"+ battles[i].facts[j] + "</li>"
+        }
+        let factTemplate = `
+            <h4>${description}</h4>
+            <p>Fought during ${date}</p>
+            <ul>${facts}</ul>
+        `
+        battleMark.on('click', function(){
+            $('.facts').html(factTemplate);
+        })
+        battlePopups.push(battleMark);
+    }
+})
+$('.nextInstruction').click(function(){
+    $('.mapAndExpansion').hide();
+    $('.battleMarkers').show();
+    $('.otherFacts').animatescroll({'scrollspeed':400});
+})
+$('.finalInstruction').click(function(){
+    $('.instructions').hide();
+})
 function loadToMap(mapName){
     var area = mapName;
     let toBeAdded = L.geoJSON(area, {

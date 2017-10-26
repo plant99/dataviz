@@ -1,0 +1,56 @@
+{
+   "places":[
+      {
+         "placeName":"Khara Khorum, Capital(Mongol Empire)",
+         "location":{
+            "lat":47.1900,
+            "lng":102.8340
+         }
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{
+            "lat":37.1987,
+            "lng":106.1581
+         }
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{
+            "lat":37.1987,
+            "lng":106.1581
+         }
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{
+            "lat":37.1987,
+            "lng":106.1581
+         }
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{"lat": 51.17934297928929, "lng": 79.30755615234376}
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{"lat": 45.9511496866914, "lng": 83.52630615234376}
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{"lat": 32.84267363195431, "lng": 87.21771240234376}
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{"lat": 54.059387886623576, "lng": 94.24896240234376}
+      },
+      {
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{"lat": 52.26815737376817, "lng": 56.10443115234375}
+      }
+      ,{
+         "placeName":"Ninxia, Capital(Western Xia)",
+         "location":{"lat": 45.089035564831036, "lng": 128.87786865234378}
+      }
+   ]
+}
