@@ -2,6 +2,7 @@ let loadedLayers = [];
 var battlePopups = [];
 let maps = {};
 let popularplaces = [];
+let silkLayer;
 $('.toggleNav').click(function(){
 	if($('#navbarContainer').css('margin-left') == '0px'){
 		console.log(1);
@@ -63,6 +64,12 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     id: 'isawnyu.map-knmctlkh',
     accessToken: 'pk.eyJ1IjoicGxhbnQ5OSIsImEiOiJjajh5MzhqdTUyNWxrMzJwOGJ0dWE2NTB0In0.dyjmXnIUF9KYU4ewcTdqcQ'
 }).addTo(mymap);
+
+//on resize
+mymap.on('map-container-resize', function () {
+   setTimeout(function(){ map.invalidateSize()}, 400);
+});
+
 function onEachFeature(feature, layer) {
     //temporarily does nothing
 }
@@ -101,6 +108,37 @@ mymap.on('zoomend', function(e){
             mymap.removeLayer(popularplace);
         }
     }
+    if(mymap.getZoom() >= 6){
+        // add road layer
+        var area = maps['silkroad'];
+        let toBeAdded = L.geoJSON(area, {
+            fillOpacity:1,
+            weight:3,
+            style: function (feature) {
+                return feature.properties && feature.properties.style;
+            },
+
+            onEachFeature: onEachFeature,
+
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 8,
+                    fillColor: "#7442a9",
+                    color: "#212f5b",
+                    weight: 0.5,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
+            }
+        });
+        toBeAdded.bindPopup("The route used by traders to trade silk and spices.")
+        silkLayer = toBeAdded;
+        toBeAdded.addTo(mymap);
+    }else{
+        if(silkLayer){
+            mymap.removeLayer(silkLayer);
+        }
+    }
 })
 mymap.on('click', function(e){
     console.log(e.latlng)
@@ -136,7 +174,9 @@ $.getJSON('/jsons/battles.geojson', function(data){
 $.getJSON('/jsons/popularplaces.geojson', function(data){
     maps['popularplaces'] = data;
 })
-
+$.getJSON('/jsons/silkroad.geojson', function(data){
+    maps['silkroad'] = data;
+})
 $('.majorBattles').click(()=>{
     while(loadedLayers.length){
         let toBeRemoved = loadedLayers.pop();
