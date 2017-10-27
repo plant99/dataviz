@@ -221,6 +221,7 @@ $('.nextInstruction').click(function(){
 })
 $('.finalInstruction').click(function(){
     $('.instructions').hide();
+    $('body').animatescroll({'scrollspeed':400});
 })
 function loadToMap(mapName){
     var area = mapName;
