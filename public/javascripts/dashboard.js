@@ -2,7 +2,7 @@ let loadedLayers = [];
 var battlePopups = [];
 let maps = {};
 let popularplaces = [];
-let silkLayer;
+let silkLayers = [];
 $('.toggleNav').click(function(){
 	if($('#navbarContainer').css('margin-left') == '0px'){
 		console.log(1);
@@ -65,13 +65,16 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     accessToken: 'pk.eyJ1IjoicGxhbnQ5OSIsImEiOiJjajh5MzhqdTUyNWxrMzJwOGJ0dWE2NTB0In0.dyjmXnIUF9KYU4ewcTdqcQ'
 }).addTo(mymap);
 
-//on resize
+//on resize, change map size too
 mymap.on('map-container-resize', function () {
    setTimeout(function(){ map.invalidateSize()}, 400);
 });
 
 function onEachFeature(feature, layer) {
     //temporarily does nothing
+    if (feature.properties && feature.properties.name) {
+        layer.bindPopup('<p>'+feature.properties.name+'</p>');
+    }
 }
 
 let loadedJSONCount = 0;
@@ -132,11 +135,12 @@ mymap.on('zoomend', function(e){
             }
         });
         toBeAdded.bindPopup("The route used by traders to trade silk and spices.")
-        silkLayer = toBeAdded;
+        silkLayers.push(toBeAdded);
         toBeAdded.addTo(mymap);
     }else{
-        if(silkLayer){
-            mymap.removeLayer(silkLayer);
+        while(silkLayers.length){
+            let toBeRemoved = silkLayers.pop();
+            mymap.removeLayer(toBeRemoved);
         }
     }
 })

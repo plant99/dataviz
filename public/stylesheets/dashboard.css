@@ -17,7 +17,7 @@
 	margin-top:50px;
 }
 .toggleNav{
-	margin-top:50%;
+	margin-top:32%;
 	display: block;
 	font-size: 20px;
 	float: right;
@@ -115,4 +115,21 @@ h1,h2,h3,h4,h4,h5,h6{
 	border-radius: 10px;
 	padding: 10px;
 	text-align: center;	
+}
+a{
+	text-decoration: none;
+	color:white;
+}
+a:hover{
+	color:purple;
+	transition-duration: 0.5s;
+	text-decoration: none;
+}
+.greeting{
+	color:white;
+	text-align: center;
+	font-size:20px;
+	border:1px solid purple;
+	padding: 20px;
+	margin-top:20px;
 }

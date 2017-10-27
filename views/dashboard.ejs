@@ -14,9 +14,12 @@
 	<!-- Navbar -->
 	<div class="container-fluid col-2" id="navbarContainer">
 		<nav>
+			<div class="greeting">
+				Hey, <%- user.name %>
+			</div>
 			<ul>
-				<li>Home</li>
-				<li>Logout</li>
+				<li><a href='/dashboard'>Home</a></li>
+				<li><a href='/logout'>Logout</a></li>
 			</ul>
 		</nav>
 		<div class="toggleNav"><span class="toggleIcon fa fa-chevron-left"></span></div>

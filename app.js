@@ -8,7 +8,9 @@ var session = require('express-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var dbInit = require('./middlewares/dbInit').dbInit
+var User = require('./schemas/User');
+var dbInit = require('./middlewares/dbInit').dbInit;
+var authenticate = require('./middlewares/authenticate').authenticate;
 var app = express();
 
 // view engine setup
@@ -33,10 +35,16 @@ app.use(session({
 }))
 
 app.use('/users', users);
-
+app.use(authenticate);
 app.get('/dashboard', (req, res)=>{
     console.log(req.session);
-    res.redirect('/dashboard.html')
+    User.findOne({emailId: req.session.emailId}, (err, user)=>{
+        res.render('dashboard', {user});
+    })
+});
+app.get('/logout', function(req, res){
+    req.session.emailId = null;
+    res.redirect('/users/login');
 })
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

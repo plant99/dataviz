@@ -1664,7 +1664,8 @@
             ]
          },
          "properties":{
-         	"style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "#B0DE5C","fillOpacity": 0.8}
+         	"style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "#B0DE5C","fillOpacity": 0.8},
+            "name":"Yuan Dynasty and Mongols"
          }
       },
       {  
@@ -2922,7 +2923,8 @@
             ]
          },
          "properties":{  
-            "style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "brown","fillOpacity": 0.8}
+            "style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "brown","fillOpacity": 0.8},
+            "name":"Ilkhanate and Mongols"
          }
       },
       {
@@ -4516,7 +4518,8 @@
             ]
          },
          "properties":{
-    		"style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "cyan","fillOpacity": 0.8}        
+    		   "style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "cyan","fillOpacity": 0.8},
+            "name":"Golden Horde"
          }
       },
       {
@@ -4962,7 +4965,8 @@
             ]
          },
          "properties":{
-         	"style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "grey","fillOpacity": 0.8}        
+         	"style": {"weight": 2,"color": "#999","opacity": 1,"fillColor": "grey","fillOpacity": 0.8},
+            "name":"Chagadai and Mongols"        
          }
       }
    ]
